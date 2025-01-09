@@ -19,4 +19,8 @@
     .post-title {
         font-size: x-large;
     }  
+
+    .post-likes{
+        font-size: larger;
+    }
 }
