@@ -1,0 +1,22 @@
+.posts {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100vw;
+    align-items: center;
+    margin-left: 7rem;
+    gap: 4rem;
+
+    .post {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        width: 35rem;
+        margin: 5rem;   
+        gap: 1rem;
+    }
+
+    .post-title {
+        font-size: x-large;
+    }  
+}
