@@ -1,0 +1,26 @@
+.posts {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 4rem;
+
+    .post {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        width: 35rem;
+        margin-top: 7rem;
+        margin-left: 5rem;
+        margin-bottom: 5rem;
+        gap: 1rem;
+    }
+
+    .post-title {
+        font-size: x-large;
+    }
+
+    .post-topic {
+        font-size: x-large;
+    }     
+}

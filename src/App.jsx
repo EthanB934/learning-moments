@@ -1,4 +1,8 @@
+import { Posts } from "./components/postList/postList"
+
 
 export const App = () => {
-  return <div>Hello World!</div>
+  return <>
+  <Posts />
+  </>
 }
