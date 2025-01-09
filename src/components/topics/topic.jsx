@@ -9,11 +9,11 @@ export const Topic = ({ prop }) => {
     }, [])
 
     const postTopic = allTopics.find((topic) => topic.id === prop.topicId)
-
+    //console.log("Prop Object", prop)
+    //console.log("All Topics", allTopics)
+    //console.log("Post Topic", postTopic)
     return  <>
-    <footer>
-        {console.log(postTopic)}
-            <div className="post-topic"> - {postTopic?.topic}</div>
-        </footer>
+    {postTopic ? <footer><div className="post-topic"> - {postTopic.topic}</div></footer> 
+               : <div>Loading...</div>}
     </>
 }
