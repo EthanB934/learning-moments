@@ -1,22 +1,27 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getAllPosts } from "../../services/postServices"
+import { getAllPosts, getAllUserLikes } from "../../services/postServices"
 import { getUsersById } from "../../services/userService"
 import { getTopicById } from "../../services/topicServices"
+import { userLikedPost } from "../../services/postServices"
 
-export const PostDetails = () => {
+export const PostDetails = ({ currentUser }) => {
     const [post, setPost] = useState({})
     const [author, setAuthor] = useState({})
     const [topic, setTopic] = useState({})
     const { postId } = useParams()
 
-    useEffect(() => {
+    const findPost = () => {
         getAllPosts()
         .then((postsArray) => {
             const allPosts = postsArray
             const thisPost = allPosts.find((post) => post.id === parseInt(postId))
             setPost(thisPost)
         })
+    }
+
+    useEffect(() => {
+        findPost()
     }, [])
 
     useEffect(() => {
@@ -38,6 +43,28 @@ export const PostDetails = () => {
         })
     }, [post])
 
+    const handleLike = () => {
+        getAllUserLikes()
+        .then((likesArray) => {
+            const allLikes = likesArray
+            //console.log(currentUser)
+            //console.log(post)
+            const newUserLike = {
+                userId: currentUser.id,
+                postId: post.id
+            }
+            //console.log(newUserLike)
+            const thisLike = allLikes.find((likeRelationship) => likeRelationship.userId === newUserLike.userId && likeRelationship.postId === newUserLike.postId)
+            if(thisLike) {
+                window.alert(`You have already like this post!`)
+            }
+            else {
+                userLikedPost(newUserLike).then(findPost)
+                console.log("New user like relationship added!")
+            }
+        })
+    }
+
     return <section>
     <div>
         <h1>{post.title}</h1>
@@ -56,6 +83,28 @@ export const PostDetails = () => {
     </div>
     <div>
         {post ? post.userLikedPosts?.length : "Likes loading..."}
+    </div>
+    <div>
+    { currentUser && author
+    // If the current user is the author of the post, display an Edit button
+        ? currentUser.id === author.id 
+            ? <button>Edit</button>
+            : (
+                ""
+              ) 
+        : (
+            ""
+          )}
+    
+    
+    { currentUser && author
+    // Else, if the current user is not the author, display a button to like the post
+        ? currentUser.id !== author?.id  
+            ? <button onClick={handleLike}>Like</button>
+            : " "
+        : (
+            " "
+          )}
     </div>
     </section>
 }
@@ -76,5 +125,6 @@ export const PostDetails = () => {
         (f) The likes count for this post 
     (5) Check the current user data: is the user is the author of the post?
     (6) If yes, display a button for the author to edit their post. Else, do not. 
+    (7) If no, display a button for the non-author user to like the post.
 
 */

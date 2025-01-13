@@ -7,14 +7,14 @@ import "./post.css"
 import { Link, Route } from "react-router-dom"
 
 
-export const Posts = () => {
-    const [allPosts, setAllPosts] = useState([])
+export const Posts = ({ allPosts }) => {
+    //const [allPosts, setAllPosts] = useState([])
     const [filteredPosts, setFilteredPosts] = useState([])
     
 
-    useEffect(() => {
-      getAllPosts().then((postsArray) => setAllPosts(postsArray))
-    }, [])
+    // useEffect(() => {
+    //   getAllPosts().then((postsArray) => setAllPosts(postsArray))
+    // }, [])
 
 
 

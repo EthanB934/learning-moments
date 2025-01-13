@@ -3,9 +3,19 @@ import { Posts } from "../components/postList/postList"
 import { NavBar } from "../components/Navigation/NavBar"
 import { useEffect, useState } from "react"
 import { PostDetails } from "../components/postList/PostDetails"
+import { getAllPosts } from "../services/postServices"
 
 export const ApplicationViews = () => {
+    const [allPosts, setAllPosts] = useState([])
     const [currentUser, setCurrentUser] = useState({})
+
+    const getAndSetAllPosts = () => {
+        getAllPosts().then((postsArray) => setAllPosts(postsArray))
+    }
+
+    useEffect(() => {
+        getAndSetAllPosts()
+      }, [])
 
     useEffect(() => {
         const localLearningUser = localStorage.getItem("learning_user")
@@ -25,10 +35,10 @@ export const ApplicationViews = () => {
                 <Outlet />
                 </>
             }
-        >   <Route index element={<Posts />} />
+        >   <Route index element={<Posts allPosts={allPosts}/>} />
             <Route path="posts">
-                <Route index element={<Posts />} />
-                <Route path=":postId" element={<PostDetails />} />
+                <Route index element={<Posts allPosts={allPosts}/>} />
+                <Route path=":postId" element={<PostDetails currentUser={currentUser}/>} />
             </Route>
 
             {/*This path had to be nested to work properly. Originally, it looked like this:
