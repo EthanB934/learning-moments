@@ -16,7 +16,6 @@ export const TopicFilterBar = ({ allPosts, setFilteredPosts }) => {
             setFilteredPosts(filteredPosts)
         }
         else if (searchRequest) {
-            debugger
             const filteredPosts = allPosts.filter((post) => 
                 post.title.toLowerCase().includes(searchRequest.toLowerCase()))
             console.log("Search Request: ", searchRequest)

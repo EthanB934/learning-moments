@@ -4,6 +4,7 @@ import { Topic } from "../topics/topic"
 import { TopicFilterBar } from "../topics/topicFilterBar"
 import { LikedPosts } from "./likedPost"
 import "./post.css"
+import { Link, Route } from "react-router-dom"
 
 
 export const Posts = () => {
@@ -25,7 +26,9 @@ export const Posts = () => {
         {filteredPosts.map((post) => {
             return <div className="post" key={post.id}>
             <header className="post-header">
-                    <div className="post-title">{post.title}</div> 
+                    <Link to={`/posts/${post.id}`}>
+                    <div className="post-title">{post.title}</div>
+                    </Link>
             </header>
                 <div><Topic prop={post}/></div>
                 <div className="post-likes"><LikedPosts prop={post}/></div>
