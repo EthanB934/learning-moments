@@ -17,9 +17,9 @@ export const CreatePost = ({ currentUser, getAndSetAllPosts }) => {
             topicId: parseInt(topic),
             userId: currentUser.id
         }
-        console.log(postObject)
+        //console.log(postObject)
         createNewPost(postObject).then(getAndSetAllPosts)
-        console.log("Congratulations! You have submitted a new post!")
+        //console.log("Congratulations! You have submitted a new post!")
         setTitle("")
         setBody("")
         setTopic(0)

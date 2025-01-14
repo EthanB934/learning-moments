@@ -8,7 +8,7 @@ import { userLikedPost } from "../../services/postServices"
 export const PostDetails = ({ currentUser }) => {
     const [post, setPost] = useState({})
     const [author, setAuthor] = useState({})
-    const [topic, setTopic] = useState({})
+    const [topic, setTopic] = useState(0)
     const { postId } = useParams()
 
     const findPost = () => {
