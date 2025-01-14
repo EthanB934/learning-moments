@@ -1,10 +1,13 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+
+.fa-regular {
+    font-size: x-large;
+}
 .posts {
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
-    width: 100vw;
     align-items: center;
-    margin-left: 7rem;
+    justify-content: center;
     gap: 4rem;
 
     .post {
@@ -14,13 +17,33 @@
         width: 35rem;
         margin: 5rem;   
         gap: 1rem;
+        background-color: antiquewhite;
+        border: 0.3rem, dotted, black;
     }
 
     .post-title {
         font-size: x-large;
+        background-color: antiquewhite;
+        padding-top: 1rem;
+        padding-left: 1rem;
     }  
 
     .post-likes{
+        display: flex;
         font-size: larger;
+        background-color: antiquewhite;
+        padding-bottom: 0.25rem;
+        padding-left:0.5rem;
+
+    }
+
+    .post-delete {
+        background-color: antiquewhite;
+        padding-right: 1rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .post-delete-button{
+        float: right;
     }
 }

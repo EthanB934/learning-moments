@@ -31,7 +31,7 @@ export const Posts = ({ allPosts }) => {
                     </Link>
             </header>
                 <div><Topic prop={post}/></div>
-                <div className="post-likes"><LikedPosts prop={post}/></div>
+                <div className="post-likes fa-solid fa-thumbs-up"><LikedPosts prop={post}/></div>
             </div>
     })}</div>
     </>
