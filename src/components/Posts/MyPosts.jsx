@@ -23,7 +23,7 @@ export const MyPosts = ({ currentUser, allPosts, getAndSetAllPosts }) => {
     }
 
     return (
-
+        <>
         <div className="posts">
         {userPosts.map((post) => {
             return <div className="post" key={post.id}>
@@ -33,15 +33,16 @@ export const MyPosts = ({ currentUser, allPosts, getAndSetAllPosts }) => {
                     </Link>
             </header>
                 <div><Topic prop={post}/></div>
-                <button 
-                className="post-delete-button"
-                onClick={() => {handleDelete(post)}}>
-                    Delete Post
-                </button>
+                <div className="post-delete">
+                    <button className="post-delete-button fa-regular fa-trash-can"
+                    onClick={() => {handleDelete(post)}}>
+                        
+                    </button>
+                </div>
             </div>
             }) 
         }
-    </div>
-
+        </div>
+        </>
     )
 }

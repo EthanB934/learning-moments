@@ -1,14 +1,19 @@
 .post-topic {
     font-size: x-large;
+    background-color: antiquewhite;
+    padding-left: 2.5rem;
+
 }
 
 .topic-options {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    height: 2rem;
+    margin-top: 5rem;
 }
 
 .topic-drop-down {
-    text-align: center;
+    text-align: left;
     margin-left: 5rem;
     width: 30rem;
 }
