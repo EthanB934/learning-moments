@@ -15,3 +15,13 @@ export const  userLikedPost = (relationship) => {
         body: JSON.stringify(relationship)
     })
 }
+
+export const createNewPost = (postObject) => {
+    return fetch ("http://localhost:8088/posts", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postObject)
+    })
+}

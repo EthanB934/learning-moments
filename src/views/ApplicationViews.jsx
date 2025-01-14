@@ -1,9 +1,10 @@
 import { Routes, Route, Outlet } from "react-router-dom"
-import { Posts } from "../components/postList/postList"
+import { Posts } from "../components/postList/PostList"
 import { NavBar } from "../components/Navigation/NavBar"
 import { useEffect, useState } from "react"
 import { PostDetails } from "../components/postList/PostDetails"
 import { getAllPosts } from "../services/postServices"
+import { CreatePost } from "../components/postList/CreatePost"
 
 export const ApplicationViews = () => {
     const [allPosts, setAllPosts] = useState([])
@@ -15,6 +16,7 @@ export const ApplicationViews = () => {
 
     useEffect(() => {
         getAndSetAllPosts()
+        console.log("Posts Array: ", allPosts)
       }, [])
 
     useEffect(() => {
@@ -38,6 +40,7 @@ export const ApplicationViews = () => {
         >   <Route index element={<Posts allPosts={allPosts}/>} />
             <Route path="posts">
                 <Route index element={<Posts allPosts={allPosts}/>} />
+                <Route path="new" element={<CreatePost currentUser={currentUser} getAndSetAllPosts={getAndSetAllPosts}/>} />
                 <Route path=":postId" element={<PostDetails currentUser={currentUser}/>} />
             </Route>
 
