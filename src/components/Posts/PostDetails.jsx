@@ -4,6 +4,7 @@ import { getAllPosts, getAllUserLikes } from "../../services/postServices"
 import { getUsersById } from "../../services/userService"
 import { getTopicById } from "../../services/topicServices"
 import { userLikedPost } from "../../services/postServices"
+import "./post.css"
 
 export const PostDetails = ({ currentUser }) => {
     const [post, setPost] = useState({})
@@ -65,26 +66,24 @@ export const PostDetails = ({ currentUser }) => {
         })
     }
 
-    return <section>
+    return <section className="post-details">
     <div>
-        <h1>{post.title}</h1>
+        <span><h1 className="post-h1">{post.title}</h1></span>
     </div>
+    <header className="post-header">
     <div>
         {author ? author.name : "Loading author..."}
     </div>
     <div>
         {topic ? topic.topic : "Topic loading..."}
     </div>
-    <div>
+    </header>
+    <div className="post-body">
         {post.body}
-    </div>
-    <div>
+    <div className="post-data">
         {post.date}
-    </div>
-    <div>
-        {post ? post.userLikedPosts?.length : "Likes loading..."}
-    </div>
-    <div>
+        <div className="like-post-button">
+        </div>
     { currentUser && author
     // If the current user is the author of the post, display an Edit button
         ? currentUser.id === author.id 
@@ -100,11 +99,20 @@ export const PostDetails = ({ currentUser }) => {
     { currentUser && author
     // Else, if the current user is not the author, display a button to like the post
         ? currentUser.id !== author?.id  
-            ? <button onClick={handleLike}>Like</button>
+            ? <button 
+            className="fa-solid fa-thumbs-up"
+            onClick={handleLike}>
+                </button>
             : " "
         : (
             " "
           )}
+        {post ? post.userLikedPosts?.length : "Likes loading..."}
+
+
+    <div>
+    </div>
+    </div>
     </div>
     </section>
 }
