@@ -2,7 +2,7 @@ import { useState, useEffect} from "react"
 import { getAllPosts } from "../../services/postServices"
 import { Topic } from "../topics/topic"
 import { TopicFilterBar } from "../topics/topicFilterBar"
-import { LikedPosts } from "./likedPost"
+import { LikedPosts } from "./LikedPost"
 import "./post.css"
 import { Link, Route } from "react-router-dom"
 
