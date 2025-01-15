@@ -57,7 +57,7 @@ export const PostDetails = ({ currentUser }) => {
             //console.log(newUserLike)
             const thisLike = allLikes.find((likeRelationship) => likeRelationship.userId === newUserLike.userId && likeRelationship.postId === newUserLike.postId)
             if(thisLike) {
-                window.alert(`You have already like this post!`)
+                window.alert(`You have already liked this post!`)
             }
             else {
                 userLikedPost(newUserLike).then(findPost)
