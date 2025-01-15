@@ -27,7 +27,7 @@ export const createNewPost = (postObject) => {
 }
 
 export const deleteMyPost = (postObjectId) => {
-    return fetch (`http://localhost:8088/posts/${postObjectId}`, {
+    return fetch (`http://localhost:8088/posts/${postObjectId.id}`, {
         method: "Delete"
-    })
+    }).then(getAllPosts())
 }
