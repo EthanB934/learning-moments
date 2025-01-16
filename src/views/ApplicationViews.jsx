@@ -1,52 +1,75 @@
-import { Routes, Route, Outlet } from "react-router-dom"
-import { Posts } from "../components/Posts/PostList"
-import { NavBar } from "../components/Navigation/NavBar"
-import { useEffect, useState } from "react"
-import { PostDetails } from "../components/Posts/PostDetails"
-import { getAllPosts } from "../services/postServices"
-import { CreatePost } from "../components/Posts/CreatePost"
-import { MyPosts } from "../components/Posts/MyPosts"
+import { Routes, Route, Outlet } from "react-router-dom";
+import { Posts } from "../components/Posts/PostList";
+import { NavBar } from "../components/Navigation/NavBar";
+import { useEffect, useState } from "react";
+import { PostDetails } from "../components/Posts/PostDetails";
+import { getAllPosts } from "../services/postServices";
+import { CreatePost } from "../components/Posts/CreatePost";
+import { MyPosts } from "../components/Posts/MyPosts";
 
 export const ApplicationViews = () => {
-    const [allPosts, setAllPosts] = useState([])
-    const [currentUser, setCurrentUser] = useState({})
+  const [allPosts, setAllPosts] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
 
-    const getAndSetAllPosts = () => {
-        getAllPosts().then((postsArray) => setAllPosts(postsArray))
-    }
+  const getAndSetAllPosts = () => {
+    getAllPosts().then((postsArray) => setAllPosts(postsArray));
+  };
 
-    useEffect(() => {
-        getAndSetAllPosts()
-        console.log("Posts Array: ", allPosts)
-      }, [])
+  useEffect(() => {
+    getAndSetAllPosts();
+    console.log("Posts Array: ", allPosts);
+  }, []);
 
-    useEffect(() => {
-        const localLearningUser = localStorage.getItem("learning_user")
-        const learningUserObj = JSON.parse(localLearningUser)
-        setCurrentUser(learningUserObj)
-    }, [])
+  useEffect(() => {
+    const localLearningUser = localStorage.getItem("learning_user");
+    const learningUserObj = JSON.parse(localLearningUser);
+    setCurrentUser(learningUserObj);
+  }, []);
 
-    //console.log("Current User: ", currentUser, typeof currentUser)
+  //console.log("Current User: ", currentUser, typeof currentUser)
 
-    return (
-        <Routes>
-            <Route 
-            path="/"
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <NavBar />
+            <Outlet />
+          </>
+        }
+      >
+        {" "}
+        <Route index element={<Posts allPosts={allPosts} />} />
+        <Route path="posts">
+          <Route index element={<Posts allPosts={allPosts} />} />
+          <Route
+            path="form"
             element={
-                <>
-                <NavBar />
-                <Outlet />
-                </>
+              <CreatePost
+                currentUser={currentUser}
+                getAndSetAllPosts={getAndSetAllPosts}
+              />
             }
-        >   <Route index element={<Posts allPosts={allPosts}/>} />
-            <Route path="posts">
-                <Route index element={<Posts allPosts={allPosts}/>} />
-                <Route path="new" element={<CreatePost currentUser={currentUser} getAndSetAllPosts={getAndSetAllPosts}/>} />
-                <Route path="myPosts" element={<MyPosts currentUser={currentUser} allPosts={allPosts} getAndSetAllPosts={getAndSetAllPosts}/>} />
-                <Route path=":postId" element={<PostDetails currentUser={currentUser}/>} />
-            </Route>
-
-            {/*This path had to be nested to work properly. Originally, it looked like this:
+          >
+            <Route path=":postId" element={<CreatePost />} />
+          </Route>
+          <Route
+            path="myPosts"
+            element={
+              <MyPosts
+                currentUser={currentUser}
+                allPosts={allPosts}
+                getAndSetAllPosts={getAndSetAllPosts}
+              />
+            }
+          />
+          <Route
+            path=":postId"
+            element={<PostDetails currentUser={currentUser} />}
+          />
+        </Route>
+        {/*This path had to be nested to work properly. Originally, it looked like this:
 
                 <Route path="posts" element={<Posts />} />
                 <Route path=":postId" element={<PostDetails />} />
@@ -71,8 +94,7 @@ export const ApplicationViews = () => {
 
             And displays the element associated with unique path
             */}
-
-        </Route>
-        </Routes>
-    )
-}
+      </Route>
+    </Routes>
+  );
+};

@@ -11,7 +11,7 @@ export const NavBar = () => {
             <Link className="navbar-link" to="/posts/myPosts">My Posts</Link>
         </li>
         <li className="navbar-item">
-            <Link className="navbar-link" to="/posts/new">New Post</Link>
+            <Link className="navbar-link" to="/posts/form">New Post</Link>
         </li>
         <li className="navbar-item">
             <Link className="navbar-link" to="">Favorites</Link>
