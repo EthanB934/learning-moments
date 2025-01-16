@@ -1,121 +1,127 @@
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { getAllPosts, getAllUserLikes } from "../../services/postServices"
-import { getUsersById } from "../../services/userService"
-import { getTopicById } from "../../services/topicServices"
-import { userLikedPost } from "../../services/postServices"
-import "./post.css"
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getAllPosts, getAllUserLikes } from "../../services/postServices";
+import { getUsersById } from "../../services/userService";
+import { getTopicById } from "../../services/topicServices";
+import { userLikedPost } from "../../services/postServices";
+import "./post.css";
 
 export const PostDetails = ({ currentUser }) => {
-    const [post, setPost] = useState({})
-    const [author, setAuthor] = useState({})
-    const [topic, setTopic] = useState(0)
-    const { postId } = useParams()
+  const [post, setPost] = useState({});
+  const [author, setAuthor] = useState({});
+  const [topic, setTopic] = useState(0);
+  const { postId } = useParams();
+  const navigate = useNavigate();
 
-    const findPost = () => {
-        getAllPosts()
-        .then((postsArray) => {
-            const allPosts = postsArray
-            const thisPost = allPosts.find((post) => post.id === parseInt(postId))
-            setPost(thisPost)
-        })
-    }
+  const findPost = () => {
+    getAllPosts().then((postsArray) => {
+      const allPosts = postsArray;
+      const thisPost = allPosts.find((post) => post.id === parseInt(postId));
+      setPost(thisPost);
+    });
+  };
 
-    useEffect(() => {
-        findPost()
-    }, [])
+  useEffect(() => {
+    findPost();
+  }, []);
 
-    useEffect(() => {
-        getUsersById(post.userId)
-        .then((usersArray) => {
-            const author = usersArray[0]
-            //console.log(post)
-            //console.log(author)
-            setAuthor(author)
-        })
-    }, [post])
+  useEffect(() => {
+    getUsersById(post.userId).then((usersArray) => {
+      const author = usersArray[0];
+      //console.log(post)
+      //console.log(author)
+      setAuthor(author);
+    });
+  }, [post]);
 
-    useEffect(() => {
-        getTopicById(post.topicId)
-        .then((topicArray) => {
-            const topic = topicArray[0]
-            //console.log(topic)
-            setTopic(topic)
-        })
-    }, [post])
+  useEffect(() => {
+    getTopicById(post.topicId).then((topicArray) => {
+      const topic = topicArray[0];
+      //console.log(topic)
+      setTopic(topic);
+    });
+  }, [post]);
 
-    const handleLike = () => {
-        getAllUserLikes()
-        .then((likesArray) => {
-            const allLikes = likesArray
-            //console.log(currentUser)
-            //console.log(post)
-            const newUserLike = {
-                userId: currentUser.id,
-                postId: post.id
-            }
-            //console.log(newUserLike)
-            const thisLike = allLikes.find((likeRelationship) => likeRelationship.userId === newUserLike.userId && likeRelationship.postId === newUserLike.postId)
-            if(thisLike) {
-                window.alert(`You have already liked this post!`)
-            }
-            else {
-                userLikedPost(newUserLike).then(findPost)
-                console.log("New user like relationship added!")
-            }
-        })
-    }
+  const handleLike = () => {
+    getAllUserLikes().then((likesArray) => {
+      const allLikes = likesArray;
+      //console.log(currentUser)
+      //console.log(post)
+      const newUserLike = {
+        userId: currentUser.id,
+        postId: post.id,
+      };
+      //console.log(newUserLike)
+      const thisLike = allLikes.find(
+        (likeRelationship) =>
+          likeRelationship.userId === newUserLike.userId &&
+          likeRelationship.postId === newUserLike.postId
+      );
+      if (thisLike) {
+        window.alert(`You have already liked this post!`);
+      } else {
+        userLikedPost(newUserLike).then(findPost);
+        console.log("New user like relationship added!");
+      }
+    });
+  };
 
-    return <section className="post-details">
-    <div>
-        <span><h1 className="post-h1">{post.title}</h1></span>
-    </div>
-    <header className="post-header">
-    <div>
-        {author ? author.name : "Loading author..."}
-    </div>
-    <div>
-        {topic ? topic.topic : "Topic loading..."}
-    </div>
-    </header>
-    <div className="post-body">
+  return (
+    <section className="post-details">
+      <div>
+        <span>
+          <h1 className="post-h1">{post.title}</h1>
+        </span>
+      </div>
+      <header className="post-header">
+        <div>{author ? author.name : "Loading author..."}</div>
+        <div>{topic ? topic.topic : "Topic loading..."}</div>
+      </header>
+      <div className="post-body">
         {post.body}
-    <div className="post-data">
-        {post.date}
-        <div className="like-post-button">
-        </div>
-    { currentUser && author
-    // If the current user is the author of the post, display an Edit button
-        ? currentUser.id === author.id 
-            ? <button>Edit</button>
-            : (
-                ""
-              ) 
-        : (
+        <div className="post-data">
+          {post.date}
+          <div className="like-post-button"></div>
+          {currentUser && author ? (
+            // If the current user is the author of the post, display an Edit button
+            currentUser.id === author.id ? (
+              <button
+                onClick={() => {
+                  navigate(`/posts/form/${postId}`, {
+                    state: { type: "edit", post: post },
+                  });
+                }}
+              >
+                Edit
+              </button>
+            ) : (
+              ""
+            )
+          ) : (
             ""
           )}
-    
-    
-    { currentUser && author
-    // Else, if the current user is not the author, display a button to like the post
-        ? currentUser.id !== author?.id  
-            ? <button 
-            className="fa-solid fa-thumbs-up"
-            onClick={handleLike}>
-                </button>
-            : " "
-        : (
+
+          {currentUser && author ? (
+            // Else, if the current user is not the author, display a button to like the post
+            currentUser.id !== author?.id ? (
+              <button
+                className="fa-solid fa-thumbs-up"
+                onClick={handleLike}
+              ></button>
+            ) : (
+              " "
+            )
+          ) : (
             " "
           )}
-        {post ? post.userLikedPosts?.length : "Likes loading..."}
+          {post ? post.userLikedPosts?.length : "Likes loading..."}
 
-
-    <div>
-    </div>
-    </div>
-    </div>
+          <div></div>
+        </div>
+      </div>
     </section>
-}
+  );
+};
 
 /*
     Problem: I need to display information unique to each post. 
