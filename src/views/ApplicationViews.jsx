@@ -6,6 +6,7 @@ import { PostDetails } from "../components/Posts/PostDetails";
 import { getAllPosts } from "../services/postServices";
 import { CreatePost } from "../components/Posts/CreatePost";
 import { MyPosts } from "../components/Posts/MyPosts";
+import { FavoritePosts } from "../components/Posts/FavoritePosts";
 
 export const ApplicationViews = () => {
   const [allPosts, setAllPosts] = useState([]);
@@ -68,6 +69,7 @@ export const ApplicationViews = () => {
             path=":postId"
             element={<PostDetails currentUser={currentUser} />}
           />
+          <Route path="favorites" element={<FavoritePosts allPosts={allPosts} currentUser={currentUser}/>} />
         </Route>
         {/*This path had to be nested to work properly. Originally, it looked like this:
 
