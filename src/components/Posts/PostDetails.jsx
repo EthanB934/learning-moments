@@ -74,7 +74,9 @@ export const PostDetails = ({ currentUser }) => {
         </span>
       </div>
       <header className="post-header">
-        <div>{author ? author.name : "Loading author..."}</div>
+        <div onClick={() => {
+          navigate(`/profile/${author.id}`)
+        }}>{author ? author.name : "Loading author..."}</div>
         <div>{topic ? topic.topic : "Topic loading..."}</div>
       </header>
       <div className="post-body">
