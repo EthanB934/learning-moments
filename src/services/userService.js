@@ -19,3 +19,16 @@ export const createUser = (user) => {
     body: JSON.stringify(user),
   }).then((res) => res.json());
 };
+
+export const updateUserProfile = (updatedProfileForm) => {
+  console.log("You have successfully update your profile!")
+  // console.log("Updated Profile: ", updatedProfileForm)
+
+  return fetch(`http://localhost:8088/users/${updatedProfileForm.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(updatedProfileForm)
+  })
+}

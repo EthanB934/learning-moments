@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUsersById } from "../../services/userService";
 
 export const Profile = ({ currentUser, allPosts }) => {
@@ -7,6 +7,7 @@ export const Profile = ({ currentUser, allPosts }) => {
   const [author, setAuthor] = useState({});
   const [postCount, setPostCount] = useState(0)
   const { userId } = useParams();
+  const navigate = useNavigate()
   //console.log(userId);
   // I need to get the current user's data
 
@@ -33,7 +34,6 @@ export const Profile = ({ currentUser, allPosts }) => {
         console.log("Author Post Count: ", postCount)
     }
     else {
-        debugger
         const currentUserPosts = allPosts.filter((post) => post.userId === parseInt(currentUser.id))
         //console.log("Current User Posts: ", currentUserPosts)
         setPostCount(currentUserPosts.length)
@@ -43,14 +43,14 @@ export const Profile = ({ currentUser, allPosts }) => {
 
 // console.log(author) undefined when user views their own profile 
 // otherwise, depends on useParams 
-
+debugger
   return (
     <>
       {user && !author ? (
         <div>
           <div>
             <h1>
-              Name: <span>{user.fullName}</span>
+              Name: <span>{user.name}</span>
             </h1>
           </div>
           <div>
@@ -67,7 +67,11 @@ export const Profile = ({ currentUser, allPosts }) => {
                 Posts: <span>{postCount}</span>
               </div>
             </div>
-            <button>Edit Profile</button>
+            <button onClick={() => {
+                  navigate(`/profile/form/${currentUser.id}`, {
+                    state: { type: "edit", profile: user},
+                  });
+            }}>Edit Profile</button>
           </div>
         </div>
       ) : (
