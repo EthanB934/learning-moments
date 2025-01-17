@@ -63,7 +63,7 @@ export const PostDetails = ({ currentUser }) => {
         userLikedPost(newUserLike).then(findPost);
         console.log("New user like relationship added!");
       }
-    });
+    }).then(navigate("/posts/favorites"));
   };
 
   return (

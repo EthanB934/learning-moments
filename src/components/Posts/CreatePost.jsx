@@ -39,6 +39,7 @@ export const CreatePost = ({ currentUser, getAndSetAllPosts }) => {
       setTitle("");
       setBody("");
       setTopicId(0);
+      navigate("/posts/myPosts")
     } else {
       window.alert("Please fill out all required fields");
     }
